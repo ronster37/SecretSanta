@@ -10,7 +10,8 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import android.os.AsyncTask;
 
-class AsyncGetMainList extends AsyncTask<String, Void, String> {
+//DO HTTP REQUEST TO SERVER AND GET JSON RETURN
+class AsyncHttpRequest extends AsyncTask<String, Void, String> {
 	
 	@Override
 	protected String doInBackground(String... urls) {

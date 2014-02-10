@@ -1,4 +1,4 @@
-package com.revolv.secretsanta.listadapter;
+package com.revolv.secretsanta.listadapters;
 
 import java.util.LinkedList;
 
@@ -11,13 +11,13 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-public class MainListAdapter extends BaseAdapter {
+public class SecretSantaListAdapter extends BaseAdapter {
 
     Context context;
-    LinkedList<MainListData> data;
+    LinkedList<SecretSantaListData> data;
     private static LayoutInflater inflater = null;
 
-    public MainListAdapter(Context context, LinkedList<MainListData> data) {
+    public SecretSantaListAdapter(Context context, LinkedList<SecretSantaListData> data) {
         // TODO Auto-generated constructor stub
         this.context = context;
         this.data = data;
@@ -25,7 +25,7 @@ public class MainListAdapter extends BaseAdapter {
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
     
-    public void setData(LinkedList<MainListData> data) {
+    public void setData(LinkedList<SecretSantaListData> data) {
     	this.data = data;
     }
 
@@ -51,9 +51,11 @@ public class MainListAdapter extends BaseAdapter {
     public View getView(int position, View convertView, ViewGroup parent) {
         // TODO Auto-generated method stub
         View vi = convertView;
-        if (vi == null) vi = inflater.inflate(R.layout.secret_santa_row, null);
-        TextView text = (TextView) vi.findViewById(R.id.tv_list_name);
-        text.setText(data.get(position).name);
+        if (vi == null) vi = inflater.inflate(R.layout.row_secret_santas, null);
+        TextView tv_santa = (TextView) vi.findViewById(R.id.tv_santa);
+        TextView tv_giftee = (TextView) vi.findViewById(R.id.tv_giftee);
+        tv_santa.setText("Santa: " + data.get(position).getSanta());
+        tv_giftee.setText("Giftee: " + data.get(position).getGiftee());
         return vi;
     }
 }

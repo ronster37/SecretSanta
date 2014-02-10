@@ -1,145 +1,134 @@
 package com.revolv.secretsanta;
 
 import java.util.LinkedList;
+import java.util.Observable;
+import java.util.Observer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.GestureDetector;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.revolv.secretsanta.listadapter.MainListAdapter;
-import com.revolv.secretsanta.listadapter.MainListData;
+import com.revolv.secretsanta.functions.HelperFunctions;
+import com.revolv.secretsanta.listadapters.MainListAdapter;
+import com.revolv.secretsanta.listadapters.MainListData;
+import com.revolv.secretsanta.models.ListModel;
 
-public class MainActivity extends Activity implements OnClickListener, OnItemClickListener, OnItemLongClickListener {
+public class MainActivity extends Activity implements OnClickListener, OnItemClickListener, Observer {
 
+	ListModel<MainListData> model = new ListModel<MainListData>();
 	ListView lv_list;
 	Button button;
-	MainListAdapter adapter;
-	LinkedList<MainListData> list_data;
 	GestureDetector gestureDetector;
 	View.OnTouchListener gestureListener;
-	
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		model.addObserver(this);
+
 		lv_list = (ListView) this.findViewById(R.id.listView1);
 		lv_list.setOnItemClickListener(this);
-		lv_list.setOnItemLongClickListener(this);
-		
-//		gestureDetector = new GestureDetector(this, new MyGestureDetector());
-//		gestureListener = new View.OnTouchListener() {
-//            public boolean onTouch(View v, MotionEvent event) {
-//                return gestureDetector.onTouchEvent(event);
-//            }
-//        };
-//        
-//		lv_list.setOnTouchListener(gestureListener);
-		
-		
+
 		button = (Button) this.findViewById(R.id.button1);
 		button.setOnClickListener(this);
-		adapter = new MainListAdapter(this, null);
-		
+		button.setEnabled(false);
+
 		handleListView();
 	}
-	
+
+	//GET USER LIST
 	private void handleListView() {
-		new AsyncGetMainList() {
-			
+		new AsyncHttpRequest() {
+
 			@Override
 			protected void onPostExecute(String result) {
 				super.onPostExecute(result);
 				try {
-					JSONArray json = new JSONArray(result);
-					LinkedList<MainListData> data = new LinkedList<MainListData>();
-					for(int i=0; i < json.length(); i++) {
-						JSONObject jsonObject = json.getJSONObject(i);
-						data.add(new MainListData(jsonObject.getString("title"), jsonObject.getString("info")));
+					JSONObject json = new JSONObject(result);
+					if(json.getString("response").equals("Success")) {
+						JSONArray json_array = json.getJSONArray("data");
+						LinkedList<MainListData> data = new LinkedList<MainListData>();
+						for (int i = 0; i < json_array.length(); i++) {
+							JSONObject jsonObject = json_array.getJSONObject(i);
+							data.add(new MainListData(jsonObject.getInt("id"), jsonObject.getString("name")));
+						}
+						
+						model.setList(data);
+					} else {
+						HelperFunctions.makeToast(MainActivity.this, MainActivity.this.getString(R.string.ERROR_GET_LIST));
 					}
 					
-					list_data = data;
-					adapter.setData(data);
-					lv_list.setAdapter(adapter);
 				} catch (JSONException e) {
-					// TODO ERROR TO USER
-					
+					HelperFunctions.makeToast(MainActivity.this, MainActivity.this.getString(R.string.ERROR_GET_LIST));
 				}
+				
+				button.setEnabled(true);
 			}
-			
-		}.execute("https://whensbest.com/revolv/");
+
+		}.execute(getString(R.string.BASE_URL) + "get-user-list");
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
 
 	@Override
-	public void onClick(View v) {
-		// TODO Auto-generated method stub
-		switch(v.getId()) {
-			case R.id.button1:
-				button.setText("Yes");
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+			case R.id.add_user:
+				Intent intent = new Intent(this, AddUserActivity.class);
+				this.startActivity(intent);
 				break;
-			
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onClick(View v) {
+		switch (v.getId()) {
+			case R.id.button1:
+				Intent intent = new Intent(this, SecretSantasActivity.class);
+				this.startActivity(intent);
+				break;
+
 			default:
-				button.setText("No");
 				break;
 		}
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
-		// TODO Auto-generated method stub
-		button.setText("WORKS");
+		Intent intent = new Intent(this, EditUserActivity.class);
+		intent.putExtra("id", ((Integer) arg1.getTag()).intValue());
+		this.startActivity(intent);
 	}
 
 	@Override
-	public boolean onItemLongClick(AdapterView<?> arg0, View arg1, int arg2,
-			long arg3) {
-		// TODO Auto-generated method stub
-		button.setText(Long.toString(arg3));
-		return true;
+	protected void onResume() {
+		super.onResume();
+		this.handleListView();
 	}
-	
-	
-//	class MyGestureDetector extends SimpleOnGestureListener {
-//		private static final int SWIPE_MIN_DISTANCE = 50;
-//	    private static final int SWIPE_MAX_OFF_PATH = 250;
-//	    private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-//		
-//        @Override
-//        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-//            try {
-//                if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-//                    return false;
-//                // right to left swipe
-//                if(e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {         
-//                    ((Button) lv_list.getChildAt(lv_list.pointToPosition((int)e1.getX(), (int)e1.getY())).findViewById(R.id.b_delete)).setVisibility(View.VISIBLE);
-//                }  else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {                    
-//                    ((Button) lv_list.getChildAt(lv_list.pointToPosition((int)e1.getX(), (int)e1.getY())).findViewById(R.id.b_delete)).setVisibility(View.GONE);
-//                }
-//            } catch (Exception e) {
-//                // nothing
-//            }
-//            return false;
-//        }
-//
-//    }
+
+	@Override
+	public void update(Observable observable, Object data) {
+		if(model.getList() != null) lv_list.setAdapter(new MainListAdapter(this, model.getList()));
+	}
 
 }

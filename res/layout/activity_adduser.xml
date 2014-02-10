@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="69dp"
+        android:hint="Name"
+        android:ems="10"
+        android:maxLength="30"
+        android:inputType="textPersonName" >
+    </EditText>
+
+    <Button
+        android:id="@+id/b_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/spin_relationship"
+        android:layout_alignRight="@+id/spin_relationship"
+        android:layout_below="@+id/spin_relationship"
+        android:layout_marginTop="24dp"
+        android:text="Add" />
+
+    <Spinner
+        android:id="@+id/spin_relationship"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/et_name"
+        android:layout_alignRight="@+id/et_name"
+        android:layout_below="@+id/et_name"
+        android:visibility="gone"
+        android:layout_marginTop="20dp" />
+
+</RelativeLayout>

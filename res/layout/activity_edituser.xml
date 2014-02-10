@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:id="@+id/rl_edit_info">
+
+        <TextView
+            android:id="@+id/tv_family"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/tv_name"
+            android:layout_alignRight="@+id/tv_name"
+            android:layout_below="@+id/tv_name"
+            android:layout_marginTop="20dp"
+            android:textSize="20sp" />
+
+
+       	<Button
+            android:id="@+id/b_delete"
+            android:layout_width="wrap_content"
+           	android:layout_height="wrap_content"
+           	android:layout_alignLeft="@+id/tv_family"
+           	android:layout_alignRight="@+id/tv_family"
+           	android:layout_below="@+id/tv_family"
+            android:text="Delete" />
+
+       	<TextView
+       	    android:id="@+id/tv_name"
+       	    android:layout_width="wrap_content"
+       	    android:layout_height="wrap_content"
+       	    android:layout_alignParentLeft="true"
+       	    android:layout_alignParentTop="true"
+       	    android:ems="10"
+       	    android:textSize="20sp" />
+        
+    </RelativeLayout>
+
+    <ProgressBar
+        android:id="@+id/progess_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content" 
+	    android:layout_centerHorizontal="true"
+	    android:layout_centerVertical="true"
+	    android:visibility="gone"/>
+
+</RelativeLayout>

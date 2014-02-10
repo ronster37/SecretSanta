@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
+	
+    <!-- SERVER REQUESTS -->
+    <string name="BASE_URL">https://whensbest.com/revolv/</string>
+    <string name="REQUEST_GET_INFO">get-user-info/</string>
+    <string name="REQUEST_UPDATE">update-user/</string>
+    <string name="REQUEST_DELETE">delete-user/</string>
+    <string name="REQUEST_ADD_USER">add-user/</string>
+    <string name="REQUEST_SEND_SANTAS">send-santas/</string>
+    <string name="REQUEST_GET_LIST">get-user-list/</string>
+    
     <string name="app_name">SecretSanta</string>
     <string name="action_settings">Settings</string>
+    <string name="add_user">Add</string>
+    <string name="add_user_activity">Add New User</string>
     <string name="hello_world">Hello world!</string>
+    
+    
+    <!-- Error Strings -->
+    <string name="ERROR_USER_INFO">Error: Could not retrieve user info.</string>
+    <string name="ERROR_DELETE">Error: Could not deleting user.</string>
+    <string name="ERROR_UPDATE">Error: Could not update user.</string>
+    <string name="ERROR_GET_LIST">Error: Could not retrieve list.</string>
+    <string name="ERROR_SECRET_SANTAS">Error: Could not send santas.</string>
+    <string name="ERROR_ADD_USER">Error: Could not add user.</string>
+    <string name="ERROR_GET_MAIN_USER">Error: Server Error.</string>
+    
+    <!-- Success Strings -->
+    <string name="SUCCESS_DELETE">Successfully deleted user.</string>
+    <string name="SUCCESS_UPDATE">Successfully updated user.</string>
+    <string name="SUCCESS_SECRET_SANTAS">Successfully sent santas.</string>
+    <string name="SUCCESS_ADD_USER">Successfully added user.</string>
+    <string name="SUCCESS_GET_MAIN_USER"></string>
 
 </resources>

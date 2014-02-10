@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="relationship">
+        <item>Yourself</item>
+        <item>Parent</item>
+        <item>Sibling</item>
+        <item>Child</item>
+        <item>Spouse</item>
+        <item>Other</item>
+    </string-array>
+    
+    <string-array name="relationship_others">
+        <item>Parent</item>
+        <item>Sibling</item>
+        <item>Child</item>
+        <item>Spouse</item>
+        <item>Other</item>
+    </string-array>
+</resources>

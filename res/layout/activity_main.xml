@@ -19,14 +19,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:text="Send Secret Santas"/>
+        android:text="Select Secret Santas"/>
 
-    <TextView  
-	    android:layout_width="wrap_content" 
+    <ProgressBar
+        android:id="@+id/progess_bar"
+        style="?android:attr/progressBarStyleLarge"
+        android:layout_width="wrap_content" 
 	    android:layout_height="wrap_content" 
 	    android:layout_centerHorizontal="true"
 	    android:layout_centerVertical="true"
-	    android:visibility="gone"
-	    android:text="No users in this List"/>
+	    android:visibility="gone"/>
 
 </RelativeLayout>

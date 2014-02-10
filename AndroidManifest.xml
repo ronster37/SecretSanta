@@ -24,6 +24,22 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+	        android:name="com.revolv.secretsanta.AddUserActivity"
+	        android:label="@string/add_user_activity"
+	        android:parentActivityName="com.revolv.secretsanta.MainActivity"
+	        android:screenOrientation="portrait"/>
+        <activity
+	        android:name="com.revolv.secretsanta.EditUserActivity"
+	        android:label="@string/add_user_activity"
+	        android:parentActivityName="com.revolv.secretsanta.MainActivity"
+	        android:screenOrientation="portrait"/>
+        
+        <activity
+	        android:name="com.revolv.secretsanta.SecretSantasActivity"
+	        android:label="@string/add_user_activity"
+	        android:parentActivityName="com.revolv.secretsanta.MainActivity"
+	        android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
